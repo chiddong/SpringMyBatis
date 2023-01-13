@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 그냥 영역에 대한 이름인데, 관례적으로 파일 이름을 적음 -->
+<!-- mapper 파일 -->
+
+<mapper namespace="test">
+
+	<!-- SQL 작성 -->
+	<!-- 
+	<select id=""></select>
+	<insert id=""></insert>
+	<update id=""></update>
+	<delete id=""></delete>
+	 -->
+	 
+	 <insert id="m2">
+	 	insert into tblMyBatis values ('노트북', 1000000, default)
+	 </insert>
+	
+	<update id="m3" parameterType="String">
+		update tblMyBatis set
+			price = price * 1.2 
+				where item = #{item} <!-- #{}안에 식별자를 적어주면 됨(이름으로 매핑하기 때문에 순서가 중요하지 않음, parameterType으로 넘어온 데이터 타입을 적어주어야함)== 이전의 ?같은 역할 -->
+	</update>
+	
+	<delete id="m4" parameterType="String">
+		delete from tblMyBatis where item = #{item}
+	</delete>
+	
+	<!-- 
+		EL이랑 비슷하게 쓰면 되는데, dto.item이 아니라 그냥 item으로 써주면 된다.
+	 	dto라는 변수가 있으면 dto.item인데 dto라는 변수 없이 그냥 dto라는 변수를 인식하고 있기 때문에 바로 적어주면 된다! 이건 변수가 아닌 메소드라는 것(getItem의 item / getPrice의 price임!)
+	 -->
+	 
+	<insert id="m5" parameterType="com.test.mybatis.MyBatisDTO">
+		insert into tblMyBatis values (#{item}, #{price}, default)
+	</insert>
+	
+	<!-- resultType이라고 해서 돌려주는 타입을 적어주어야 한다. -->
+	<select id="m6" resultType="String">
+		select item from tblMyBatis
+			where price = (select max(price) from tblMyBatis)
+				and rownum = 1
+	</select>
+	
+	<select id="m7" parameterType="String" resultType="com.test.mybatis.MyBatisDTO">
+		select * from tblMyBatis where item = #{item}
+	</select>
+	
+	<!-- 레코드 한줄의 타입을 적어야하니까, dto로 결과값을 돌려받아야함, list가 아니라! -->
+	<select id="m8" resultType="com.test.mybatis.MyBatisDTO">
+		select * from tblMyBatis
+	</select>
+	
+	<select id="m9" parameterType="String" resultType="com.test.mybatis.MyBatisDTO">
+		select * from tblMyBatis where item like '%' || #{item} ||'%'
+	</select>
+	
+	<!-- 바인딩 방법은 #바인딩과 $바인딩이 있다. 이때 보통 #바인딩을 사용하지만, 넘긴게 테이블이름이거나 컬럼이름인 경우엔 $바인딩을 사용(식별자를 그~대로 넘겨버림!) -->
+	<select id="m10" parameterType="String" resultType="Integer">
+		select count(*) from ${table}
+	</select>
+	
+	<select id="m11" parameterType="Integer" resultType="com.test.mybatis.MyBatisDTO">
+	
+	
+	<!-- 동적쿼리 -->
+		select * from tblMyBatis
+	
+			<if test="type==1">
+			order by item asc
+			</if>
+			
+			<if test="type==2">
+			order by item desc
+			</if>
+			
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

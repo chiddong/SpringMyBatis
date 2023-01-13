@@ -1,0 +1,73 @@
+DB 영속성 계층 (데이터를 영구적으로 보관하는 일을 한다. > text파일이나 db에 저장하는것)
+		=> 자바 퍼시스턴트 프레임워크라고도 함
+- JDBC
+- Spring JDBC
+- MyBatis
+- JPA
+
+MyBatis (= iBatis, 많이 옛날 이름임)
+- DB 연결 계층(기술)
+ - SQL을 XML 형태로 관리한다. > JDBC이 비해서 자동처리가 많이 되어 있음
+ - 스프링의 기술이 아닌 독립적인 기술임!!!!!
+
+
+
+
+1. 버전 수정, pom.xml + project porperties
+	- 자바 11
+	- 스프링 5.0.7
+	
+2. 의존성 추가
+	- pom.xml
+
+3. 필터 등록
+	- web.xml
+	
+4. 스프링 설정(MyBatis)	
+	- WEB-INF > Spring > root-context.xml
+
+5. 파일 생성하기
+인터페이스가 약속을 주고받는 규칙역할으 한다.
+	- com.test.mybatis 	> "MyController.java"
+									> "MyBatisService.java(I)"
+									> "MyBatisServiceImpl.java"	:구현체
+									> "MyBatisDAO.java(I)"
+									> "MyBatisDAOImpl.java"
+									> "MyBatisDTO.java"
+	- views > "result.jsp"
+	- SpringMyBatis > "db.spl"
+	
+	
+	Controller -> (의존) -> Service -> (의존) -> DAO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
